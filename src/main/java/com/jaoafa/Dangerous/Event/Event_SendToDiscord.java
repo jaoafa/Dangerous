@@ -89,6 +89,22 @@ public class Event_SendToDiscord implements Listener {
 	public void onAdvancement(PlayerAdvancementDoneEvent event){
 		Player player = event.getPlayer();
 		Advancement advancement = event.getAdvancement();
+
+		// https://github.com/DiscordSRV/DiscordSRV/blob/6b8de4afb3bfecf9c63275d381c75b103e5543f3/src/main/java/github/scarsz/discordsrv/listeners/PlayerAdvancementDoneListener.java
+		if (event.getAdvancement() == null || event.getAdvancement().getKey().getKey().contains("recipe/") || event.getPlayer() == null) return;
+
+        try {
+            Object craftAdvancement = ((Object) event.getAdvancement()).getClass().getMethod("getHandle").invoke(event.getAdvancement());
+            Object advancementDisplay = craftAdvancement.getClass().getMethod("c").invoke(craftAdvancement);
+            boolean display = (boolean) advancementDisplay.getClass().getMethod("i").invoke(advancementDisplay);
+            if (!display) return;
+        } catch (NullPointerException e) {
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
 		String rawAdvancementName = advancement.getKey().getKey();
 		AdvancementJP advanceJp = AdvancementJP.getAdvancementJPFromKey(rawAdvancementName);
 		String message = ":medal: **" + player.getName() + "が実績「" + advanceJp.getName() + "」を取得しました。**";
