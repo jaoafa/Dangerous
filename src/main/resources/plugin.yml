@@ -1,0 +1,14 @@
+name: ${project.artifactId}
+main: com.jaoafa.Dangerous.Main
+version: ${project.version}
+description: 2019年08月サバイバルイベントプラグイン
+database: true
+api-version: 1.13
+softdepend: []
+author: mine_book000
+commands:
+   selectmain:
+      description: メインサーバの選択ができます。
+      usage: /<command>
+      permission: dangerous.selectmain
+      permission-message: You do not have permission to perform this command.
