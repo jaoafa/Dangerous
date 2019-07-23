@@ -12,3 +12,8 @@ commands:
       usage: /<command>
       permission: dangerous.selectmain
       permission-message: You do not have permission to perform this command.
+   dangerous:
+      description: Dangerousプラグインの設定等が変更できます。
+      usage: /<command>
+      permission: dangerous.dangerous
+      permission-message: You do not have permission to perform this command.

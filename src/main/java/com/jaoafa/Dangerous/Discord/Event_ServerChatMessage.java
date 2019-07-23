@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import com.jaoafa.Dangerous.Main;
+import com.jaoafa.Dangerous.Lib.MuteManager;
 
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -33,6 +34,10 @@ public class Event_ServerChatMessage {
 				_channel -> _channel != null && _channel.getLongID() == channel.getLongID()).collect(Collectors.toList());
 		if(filtered.isEmpty()){
 			return; // 違うチャンネルから
+		}
+		if(MuteManager.Exists(author.getStringID())){
+			message.delete();
+			return;
 		}
 		String name = author.getNicknameForGuild(guild);
 		if(name == null){

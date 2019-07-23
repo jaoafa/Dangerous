@@ -46,6 +46,8 @@ public class Event_SendToDiscord implements Listener {
 		Player player = event.getPlayer();
 		String chat = event.getMessage();
 		chat = ChatColor.stripColor(chat);
+		chat = chat.replaceAll("@here", "");
+		chat = chat.replaceAll("@everyone", "");
 		String message = "**" + player.getName() + "**: " + chat;
 		if(Main.channels != null){
 			for(IChannel channel : Main.channels){
@@ -74,6 +76,8 @@ public class Event_SendToDiscord implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onDeath(PlayerDeathEvent event){
 		String reason = event.getDeathMessage();
+		reason = reason.replaceAll("@here", "");
+		reason = reason.replaceAll("@everyone", "");
 		String message = "**" + reason + "**";
 		if(Main.channels != null){
 			for(IChannel channel : Main.channels){

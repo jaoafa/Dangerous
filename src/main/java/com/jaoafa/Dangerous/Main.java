@@ -9,6 +9,7 @@ import java.util.Queue;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.jaoafa.Dangerous.Command.Cmd_Dangerous;
 import com.jaoafa.Dangerous.Command.Cmd_SelectMain;
 import com.jaoafa.Dangerous.Discord.Event_DiscordReady;
 import com.jaoafa.Dangerous.Discord.Event_ServerChatMessage;
@@ -18,6 +19,7 @@ import com.jaoafa.Dangerous.Event.Event_MainServerChat;
 import com.jaoafa.Dangerous.Event.Event_PlayerCommandSendOP;
 import com.jaoafa.Dangerous.Event.Event_SendToDiscord;
 import com.jaoafa.Dangerous.Event.Event_ServerSelect;
+import com.jaoafa.Dangerous.Lib.MuteManager;
 import com.jaoafa.Dangerous.Lib.MySQL;
 
 import sx.blah.discord.api.ClientBuilder;
@@ -37,6 +39,7 @@ public class Main extends JavaPlugin {
 	public static List<IChannel> channels = null;
 	public static Queue<String> queue = new ArrayDeque<>();
 	private static JavaPlugin javaplugin = null;
+	private static IDiscordClient discordclient = null;
 	/**
 	 * プラグインが起動したときに呼び出し
 	 * @author mine_book000
@@ -45,6 +48,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getCommand("selectmain").setExecutor(new Cmd_SelectMain(this));
+		getCommand("dangerous").setExecutor(new Cmd_Dangerous(this));
 		getServer().getPluginManager().registerEvents(new Event_AsyncPreLogin(this), this);
 		getServer().getPluginManager().registerEvents(new Event_SendToDiscord(this), this);
 		getServer().getPluginManager().registerEvents(new Event_ServerSelect(this), this);
@@ -53,6 +57,8 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Event_PlayerCommandSendOP(), this);
 
 		Load_Config(); // Config Load
+
+		MuteManager.start(this);
 
 		javaplugin = this;
 	}
@@ -127,5 +133,11 @@ public class Main extends JavaPlugin {
 	}
 	public static JavaPlugin getJavaPlugin(){
 		return javaplugin;
+	}
+	public static IDiscordClient getClient(){
+		return discordclient;
+	}
+	public static void setClient(IDiscordClient discordclient){
+		Main.discordclient = discordclient;
 	}
 }

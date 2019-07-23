@@ -18,6 +18,8 @@ public class Event_DiscordReady {
 		System.out.println("Ready: " + event.getClient().getOurUser().getName());
 
 		IDiscordClient client = event.getClient();
+		Main.setClient(client);
+
 		List<IChannel> channels = client.getChannels();
 		System.out.println("[Dangerous] " + channels.size() + " channels were found from the Discord.");
 		System.out.println("[Dangerous] " + Main.channelIds.size() + " channel IDs were found from the config.");

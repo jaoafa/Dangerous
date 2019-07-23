@@ -10,7 +10,7 @@ import com.jaoafa.Dangerous.Lib.MainServerManager;
 import com.jaoafa.Dangerous.Lib.Servers;
 
 public class Event_MainServerChat implements Listener {
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEvent_ChatMainServer(AsyncPlayerChatEvent event){
 		Servers server = MainServerManager.getMainServer(event.getPlayer().getUniqueId());
 		if(server == null) server = Servers.UNKNOWN;
