@@ -71,9 +71,8 @@ public class Cmd_Dangerous implements CommandExecutor {
 					}
 				}else if(args[1].equalsIgnoreCase("forceadd")){
 					String userid = args[2];
-					long userlongid;
 					try{
-						userlongid = Long.valueOf(userid);
+						Long.valueOf(userid);
 					}catch(NumberFormatException e){
 						sender.sendMessage("[Dangerous] " + ChatColor.GREEN + "指定されたユーザーIDの形式が正しくありません。");
 						return true;
@@ -120,9 +119,8 @@ public class Cmd_Dangerous implements CommandExecutor {
 					}
 				}else if(args[1].equalsIgnoreCase("forceremove")){
 					String userid = args[2];
-					long userlongid;
 					try{
-						userlongid = Long.valueOf(userid);
+						Long.valueOf(userid);
 					}catch(NumberFormatException e){
 						sender.sendMessage("[Dangerous] " + ChatColor.GREEN + "指定されたユーザーIDの形式が正しくありません。");
 						return true;
@@ -152,6 +150,7 @@ public class Cmd_Dangerous implements CommandExecutor {
 					IChannel channel = Main.getClient().getChannelByID(channelID);
 					if(channel == null){
 						sender.sendMessage("[Dangerous] " + ChatColor.GREEN + "指定されたチャンネルが見つかりません。");
+						return true;
 					}
 					String name = channel.getName();
 					String guildName = channel.getGuild().getName();
@@ -179,6 +178,7 @@ public class Cmd_Dangerous implements CommandExecutor {
 					IChannel channel = Main.getClient().getChannelByID(channelID);
 					if(channel == null){
 						sender.sendMessage("[Dangerous] " + ChatColor.GREEN + "指定されたチャンネルが見つかりません。");
+						return true;
 					}
 					String name = channel.getName();
 					String guildName = channel.getGuild().getName();
