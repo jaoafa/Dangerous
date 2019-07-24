@@ -270,7 +270,10 @@ public class Cmd_Dangerous implements CommandExecutor {
 		}else if(args.length == 1){
 			if(args[0].equalsIgnoreCase("update")){
 				// Dangerousプラグインアップデート
-				sender.sendMessage("[Dangerous] " + "test100000");
+				if(Main.Updating){
+					sender.sendMessage("[Dangerous] " + "現在プラグインアップデート中です。重複して起動できません。");
+					return true;
+				}
 				new Updater().start();
 				return true;
 			}

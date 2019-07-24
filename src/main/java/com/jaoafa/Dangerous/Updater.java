@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 public class Updater extends Thread{
 	public void run(){
+		Main.Updating = true;
 		try{
 			for(Player player : Bukkit.getOnlinePlayers()){
 				if(!player.isOp()){
@@ -69,7 +70,7 @@ public class Updater extends Thread{
 			System.out.println("[Dangerous] " + "Update err " + e.getMessage());
 		}
 	}
-	File getJarFile(Class<?> clazz) throws URISyntaxException, MalformedURLException {
+	public static File getJarFile(Class<?> clazz) throws URISyntaxException, MalformedURLException {
         URL url = clazz.getProtectionDomain().getCodeSource().getLocation();
         return new File(new URL(url.toURI().toString().split("\\!")[0].replaceAll("jar:file", "file")).toURI().getPath());
     }

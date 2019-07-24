@@ -1,5 +1,8 @@
 package com.jaoafa.Dangerous;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayDeque;
@@ -19,6 +22,7 @@ import com.jaoafa.Dangerous.Event.Event_MainServerChat;
 import com.jaoafa.Dangerous.Event.Event_PlayerCommandSendOP;
 import com.jaoafa.Dangerous.Event.Event_SendToDiscord;
 import com.jaoafa.Dangerous.Event.Event_ServerSelect;
+import com.jaoafa.Dangerous.Lib.MessageQueue;
 import com.jaoafa.Dangerous.Lib.MuteManager;
 import com.jaoafa.Dangerous.Lib.MySQL;
 
@@ -27,6 +31,7 @@ import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.util.DiscordException;
+import sx.blah.discord.util.RequestBuffer;
 
 public class Main extends JavaPlugin {
 	public static String sqlserver = "jaoafa.com";
@@ -40,6 +45,7 @@ public class Main extends JavaPlugin {
 	public static Queue<String> queue = new ArrayDeque<>();
 	private static JavaPlugin javaplugin = null;
 	private static IDiscordClient discordclient = null;
+	public static boolean Updating = false;
 	/**
 	 * プラグインが起動したときに呼び出し
 	 * @author mine_book000
@@ -60,7 +66,53 @@ public class Main extends JavaPlugin {
 
 		MuteManager.start(this);
 
+		// start message
+		String message = ":white_check_mark: **Server Started!** :white_check_mark:";
+		if(Main.channels != null){
+			for(IChannel channel : Main.channels){
+				RequestBuffer.request(() -> {
+					channel.sendMessage(message);
+				});
+			}
+		}else{
+			MessageQueue.Add(message);
+		}
+
+		try{
+			File jarfile = Updater.getJarFile(Main.class);
+			File file = new File(jarfile.getParentFile().getAbsoluteFile() + File.separator + "Dangerous.update.jar");
+			if(file.exists()){
+				file.delete();
+			}
+		}catch(URISyntaxException | IOException e){
+			e.printStackTrace();
+		}
+
 		javaplugin = this;
+	}
+	@Override
+    public void onDisable() {
+		try{
+			File jarfile = Updater.getJarFile(Main.class);
+			File file = new File(jarfile.getParentFile().getAbsoluteFile() + File.separator + "Dangerous.update.jar");
+			if(file.exists()){
+				file.delete();
+			}
+		}catch(URISyntaxException | IOException e){
+			e.printStackTrace();
+		}
+
+		// closed message
+		String message = ":octagonal_sign: **Server Closed.** :octagonal_sign:";
+		if(Main.channels != null){
+			for(IChannel channel : Main.channels){
+				RequestBuffer.request(() -> {
+					channel.sendMessage(message);
+				});
+			}
+		}else{
+			MessageQueue.Add(message);
+		}
 	}
 	/**
 	 * コンフィグ読み込み

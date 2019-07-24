@@ -11,8 +11,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.jaoafa.Dangerous.Main;
@@ -122,6 +120,7 @@ public class Event_SendToDiscord implements Listener {
 			MessageQueue.Add(message);
 		}
 	}
+	/*
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEnable(PluginEnableEvent event){
 		String message = ":white_check_mark: **Server Started!** :white_check_mark:";
@@ -148,4 +147,5 @@ public class Event_SendToDiscord implements Listener {
 			MessageQueue.Add(message);
 		}
 	}
+	*/
 }
