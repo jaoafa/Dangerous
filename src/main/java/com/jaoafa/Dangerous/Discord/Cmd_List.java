@@ -32,6 +32,7 @@ public class Cmd_List implements CommandPremise {
 			RequestBuffer.request(() -> {
 				channel.sendMessage(content);
 			});
+			return;
 		}
 		Set<String> players = new HashSet<>();
 		for(Player player : Bukkit.getOnlinePlayers()) {
