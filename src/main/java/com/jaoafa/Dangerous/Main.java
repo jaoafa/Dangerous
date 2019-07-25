@@ -16,6 +16,7 @@ import com.jaoafa.Dangerous.Command.Cmd_Dangerous;
 import com.jaoafa.Dangerous.Command.Cmd_SelectMain;
 import com.jaoafa.Dangerous.Discord.Event_DiscordReady;
 import com.jaoafa.Dangerous.Discord.Event_ServerChatMessage;
+import com.jaoafa.Dangerous.Discord.MainEvent;
 import com.jaoafa.Dangerous.Event.Event_AsyncPreLogin;
 import com.jaoafa.Dangerous.Event.Event_JoinSelectServer;
 import com.jaoafa.Dangerous.Event.Event_MainServerChat;
@@ -126,6 +127,7 @@ public class Main extends JavaPlugin {
 			EventDispatcher dispatcher = client.getDispatcher();
 			dispatcher.registerListener(new Event_DiscordReady());
 			dispatcher.registerListener(new Event_ServerChatMessage());
+			dispatcher.registerListener(new MainEvent());
 		}else{
 			getLogger().info("Discordへの接続に失敗しました。 [conf NotFound]");
 			getLogger().info("Disable Dangerous...");
