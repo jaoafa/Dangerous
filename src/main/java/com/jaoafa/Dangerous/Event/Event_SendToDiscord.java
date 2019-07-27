@@ -74,6 +74,7 @@ public class Event_SendToDiscord implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onDeath(PlayerDeathEvent event){
 		String reason = event.getDeathMessage();
+		reason = ChatColor.stripColor(reason);
 		reason = reason.replaceAll("@here", "");
 		reason = reason.replaceAll("@everyone", "");
 		String message = "**" + reason + "**";
