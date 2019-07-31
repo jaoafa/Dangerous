@@ -13,6 +13,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class Updater extends Thread{
+	String address;
+	public Updater(){
+		address = "https://raw.githubusercontent.com/jaoafa/Dangerous/master/Dangerous-jar-with-dependencies.jar";
+	}
+	public Updater(String address){
+		this.address = address;
+	}
 	public void run(){
 		Main.Updating = true;
 		try{
@@ -26,7 +33,7 @@ public class Updater extends Thread{
 
 			File jarfile = getJarFile(Main.class);
 			long jarfileSize = jarfile.length();
-			URL url = new URL("https://raw.githubusercontent.com/jaoafa/Dangerous/master/Dangerous-jar-with-dependencies.jar");
+			URL url = new URL(address);
 
 			URLConnection conn = url.openConnection();
 			InputStream in = conn.getInputStream();
@@ -55,9 +62,15 @@ public class Updater extends Thread{
 					continue;
 				}
 				player.sendMessage("[Dangerous] " + "Updated : " + jarfileSize + " -> " + fileSize);
+				if(jarfileSize == fileSize){
+					player.sendMessage("[Dangerous] " + "(No changed filesize)");
+				}
 				player.sendMessage("[Dangerous] " + "Please Server Restart");
 			}
 			System.out.println("[Dangerous] " + "Updated : " + jarfileSize + " -> " + fileSize);
+			if(jarfileSize == fileSize){
+				System.out.println("[Dangerous] " + "(No changed filesize)");
+			}
 			System.out.println("[Dangerous] " + "Please Server Restart");
 
 		}catch(URISyntaxException | IOException e){
@@ -68,6 +81,7 @@ public class Updater extends Thread{
 				player.sendMessage("[Dangerous] " + "Update err " + e.getMessage());
 			}
 			System.out.println("[Dangerous] " + "Update err " + e.getMessage());
+			Main.Updating = false;
 		}
 	}
 	public static File getJarFile(Class<?> clazz) throws URISyntaxException, MalformedURLException {

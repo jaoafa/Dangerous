@@ -2,6 +2,8 @@ package com.jaoafa.Dangerous.Discord;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -9,6 +11,7 @@ import org.bukkit.ChatColor;
 
 import com.jaoafa.Dangerous.Main;
 import com.jaoafa.Dangerous.Lib.MuteManager;
+import com.vdurmont.emoji.EmojiParser;
 
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -20,6 +23,7 @@ import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.RequestBuffer;
 
 public class Event_ServerChatMessage {
+	String regex = "<a?:(.+?):([0-9]+)>";
 	@EventSubscriber
 	public void onMessageReceivedEvent(MessageReceivedEvent event) {
 		IGuild guild = event.getGuild();
@@ -43,14 +47,26 @@ public class Event_ServerChatMessage {
 		if(name == null){
 			name = author.getName();
 		}
-		Bukkit.broadcastMessage(ChatColor.AQUA + "[" + guild.getName() + "#" + channel.getName() + "] " + ChatColor.RESET + name + ": " + formatcontent);
+		formatcontent = EmojiParser.parseToAliases(formatcontent);
+		formatcontent = ChatColor.translateAlternateColorCodes('&', formatcontent);
+
+		// 鯖絵文字
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(formatcontent);
+		while(m.find()){
+			formatcontent = formatcontent.replace(m.group(), ":" + m.group(1) + ":");
+		}
+
+		String guildFirst = guild.getName().substring(0, 1);
+
+		Bukkit.broadcastMessage(ChatColor.AQUA + "[" + guildFirst + "#" + channel.getName() + "] " + ChatColor.RESET + name + ": " + formatcontent);
 
 		if(!message.getAttachments().isEmpty()){
 			List<String> urls = new ArrayList<>();
 			for(Attachment attachment : message.getAttachments()){
 				urls.add(attachment.getUrl());
 			}
-			Bukkit.broadcastMessage(ChatColor.AQUA + "[" + guild.getName() + "#" + channel.getName() + "] " + ChatColor.RESET + name + ": " + String.join(" ", urls));
+			Bukkit.broadcastMessage(ChatColor.AQUA + "[" + guildFirst + "#" + channel.getName() + "] " + ChatColor.RESET + name + ": " + String.join(" ", urls));
 		}
 
 		content = content.replaceAll("@here", "");
@@ -64,7 +80,7 @@ public class Event_ServerChatMessage {
 				if(_name == null){
 					_name = author.getName();
 				}
-				_channel.sendMessage("**[" + guild.getName() + "#" + channel.getName() + "] " + _name + "**: " + _content + "\n");
+				_channel.sendMessage("**[" + guildFirst + "#" + channel.getName() + "] " + _name + "**: " + _content + "\n");
 			});
 			if(!message.getAttachments().isEmpty()){
 				RequestBuffer.request(() -> {
@@ -76,7 +92,7 @@ public class Event_ServerChatMessage {
 					for(Attachment attachment : message.getAttachments()){
 						urls.add(attachment.getUrl());
 					}
-					_channel.sendMessage("**[" + guild.getName() + "#" + channel.getName() + "] " + _name + "**: " + String.join(" ", urls));
+					_channel.sendMessage("**[" + guildFirst + "#" + channel.getName() + "] " + _name + "**: " + String.join(" ", urls));
 				});
 			}
 		}

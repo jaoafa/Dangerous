@@ -266,6 +266,14 @@ public class Cmd_Dangerous implements CommandExecutor {
 					sender.sendMessage("[Dangerous] " + ChatColor.GREEN + allchannels);
 					return true;
 				}
+			}else if(args[0].equalsIgnoreCase("update")){
+				// Dangerousプラグインアップデート
+				if(Main.Updating){
+					sender.sendMessage("[Dangerous] " + "現在プラグインアップデート中です。重複して起動できません。");
+					return true;
+				}
+				new Updater(args[1]).start();
+				return true;
 			}
 		}else if(args.length == 1){
 			if(args[0].equalsIgnoreCase("update")){
