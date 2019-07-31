@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import com.jaoafa.Dangerous.CommandPremise;
 import com.jaoafa.Dangerous.Main;
+import com.jaoafa.Dangerous.Lib.MessageQueue;
 
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IChannel;
@@ -39,9 +40,15 @@ public class Cmd_List implements CommandPremise {
 			players.add(player.getName());
 		}
 		String content = "**Online players (" + Bukkit.getOnlinePlayers().size() + " / " + Bukkit.getMaxPlayers() + ")**:```" + String.join(", ", players) + "```";
-		RequestBuffer.request(() -> {
-			channel.sendMessage(content);
-		});
+		if(Main.channels != null){
+			for(IChannel _channel : Main.channels){
+				RequestBuffer.request(() -> {
+					_channel.sendMessage(content);
+				});
+			}
+		}else{
+			MessageQueue.Add(content);
+		}
 	}
 
 	@Override

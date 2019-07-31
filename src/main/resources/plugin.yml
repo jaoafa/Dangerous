@@ -17,3 +17,16 @@ commands:
       usage: /<command>
       permission: dangerous.dangerous
       permission-message: You do not have permission to perform this command.
+   management:
+      description: プラグインの制御等を行います。
+      usage: /<command>
+      permission: dangerous.management
+      permission-message: You do not have permission to perform this command.
+   g:
+      description: ゲームモードを変更します。
+      usage: |-
+        /g: クリエイティブモードならスペクテイターモードに、スペクテイターモードならクリエイティブモードに、それ以外ならクリエイティブモードに変更します。
+        /g <0-3>: 指定された数値に合うゲームモードに変更します。
+        /g <0-3> <Player>: 指定したプレイヤーのゲームモードを指定された数値に合うゲームモードに変更します。
+      permission: dangerous.g
+      permission-message: You do not have permission to perform this command.

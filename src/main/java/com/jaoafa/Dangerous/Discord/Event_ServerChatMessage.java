@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 
 import com.jaoafa.Dangerous.Main;
 import com.jaoafa.Dangerous.Lib.MuteManager;
+import com.jaoafa.Dangerous.Lib.Servers;
 import com.vdurmont.emoji.EmojiParser;
 
 import sx.blah.discord.api.events.EventSubscriber;
@@ -57,16 +58,18 @@ public class Event_ServerChatMessage {
 			formatcontent = formatcontent.replace(m.group(), ":" + m.group(1) + ":");
 		}
 
-		String guildFirst = guild.getName().substring(0, 1);
+		// ServerColor
+		Servers server = Servers.getServerFromDiscordServer(guild.getLongID());
+		ChatColor color = server.getColor();
 
-		Bukkit.broadcastMessage(ChatColor.AQUA + "[" + guildFirst + "#" + channel.getName() + "] " + ChatColor.RESET + name + ": " + formatcontent);
+		Bukkit.broadcastMessage(color + "[" + guild.getName() + "] " + ChatColor.RESET + name + ": " + formatcontent);
 
 		if(!message.getAttachments().isEmpty()){
 			List<String> urls = new ArrayList<>();
 			for(Attachment attachment : message.getAttachments()){
 				urls.add(attachment.getUrl());
 			}
-			Bukkit.broadcastMessage(ChatColor.AQUA + "[" + guildFirst + "#" + channel.getName() + "] " + ChatColor.RESET + name + ": " + String.join(" ", urls));
+			Bukkit.broadcastMessage(color + "[" + guild.getName() + "] " + ChatColor.RESET + name + ": " + String.join(" ", urls));
 		}
 
 		content = content.replaceAll("@here", "");
@@ -80,7 +83,11 @@ public class Event_ServerChatMessage {
 				if(_name == null){
 					_name = author.getName();
 				}
-				_channel.sendMessage("**[" + guildFirst + "#" + channel.getName() + "] " + _name + "**: " + _content + "\n");
+				_name = _name.replace("_", "\\_");
+				_name = _name.replace("*", "\\*");
+				_name = _name.replace("`", "\\`");
+				_name = _name.replace("~", "\\~");
+				_channel.sendMessage("**[" + guild.getName() + "] " + _name + "**: " + _content + "\n");
 			});
 			if(!message.getAttachments().isEmpty()){
 				RequestBuffer.request(() -> {
@@ -88,11 +95,15 @@ public class Event_ServerChatMessage {
 					if(_name == null){
 						_name = author.getName();
 					}
+					_name = _name.replace("_", "\\_");
+					_name = _name.replace("*", "\\*");
+					_name = _name.replace("`", "\\`");
+					_name = _name.replace("~", "\\~");
 					List<String> urls = new ArrayList<>();
 					for(Attachment attachment : message.getAttachments()){
 						urls.add(attachment.getUrl());
 					}
-					_channel.sendMessage("**[" + guildFirst + "#" + channel.getName() + "] " + _name + "**: " + String.join(" ", urls));
+					_channel.sendMessage("**[" + guild.getName() + "] " + _name + "**: " + String.join(" ", urls));
 				});
 			}
 		}

@@ -16,6 +16,9 @@ public class MessageQueue extends Thread {
 	public void run(){
 		while(true){
 			String message = Main.queue.poll();
+			if(!Main.SERVICE_RUNNING_FLAG){
+				return;
+			}
 			if(message == null) continue;
 			for(IChannel channel : Main.channels){
 				RequestBuffer.request(() -> {

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -31,7 +30,7 @@ public class Updater extends Thread{
 			}
 			System.out.println("[Dangerous] " + "Update file downloading...");
 
-			File jarfile = getJarFile(Main.class);
+			File jarfile = Main.getJarFile(Main.class);
 			long jarfileSize = jarfile.length();
 			URL url = new URL(address);
 
@@ -84,8 +83,4 @@ public class Updater extends Thread{
 			Main.Updating = false;
 		}
 	}
-	public static File getJarFile(Class<?> clazz) throws URISyntaxException, MalformedURLException {
-        URL url = clazz.getProtectionDomain().getCodeSource().getLocation();
-        return new File(new URL(url.toURI().toString().split("\\!")[0].replaceAll("jar:file", "file")).toURI().getPath());
-    }
 }

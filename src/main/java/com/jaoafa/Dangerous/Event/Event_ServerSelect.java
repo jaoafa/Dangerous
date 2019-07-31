@@ -57,7 +57,7 @@ public class Event_ServerSelect implements Listener {
 			player.sendMessage("[ServerMain] " + ChatColor.GREEN + "メインサーバを「" + ChatColor.BLUE + "FruitServer" + ChatColor.GREEN + "」として設定しました。");
 		}else if(itemmeta.getDisplayName().equals("TORO Server")){
 			MainServerManager.setMainServer(uuid, Servers.TORO);
-			player.sendMessage("[ServerMain] " + ChatColor.GREEN + "メインサーバを「" + ChatColor.BLACK + "TORO Server" + ChatColor.GREEN + "」として設定しました。");
+			player.sendMessage("[ServerMain] " + ChatColor.GREEN + "メインサーバを「" + ChatColor.GRAY + "TORO Server" + ChatColor.GREEN + "」として設定しました。");
 		}else if(itemmeta.getDisplayName().equals("さばみそサーバー")){
 			MainServerManager.setMainServer(uuid, Servers.SABAMISO);
 			player.sendMessage("[ServerMain] " + ChatColor.GREEN + "メインサーバを「" + ChatColor.GOLD + "さばみそサーバー" + ChatColor.GREEN + "」として設定しました。");

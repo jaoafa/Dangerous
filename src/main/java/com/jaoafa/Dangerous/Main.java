@@ -2,7 +2,9 @@ package com.jaoafa.Dangerous;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayDeque;
@@ -13,6 +15,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.jaoafa.Dangerous.Command.Cmd_Dangerous;
+import com.jaoafa.Dangerous.Command.Cmd_G;
+import com.jaoafa.Dangerous.Command.Cmd_Management;
 import com.jaoafa.Dangerous.Command.Cmd_SelectMain;
 import com.jaoafa.Dangerous.Discord.Event_DiscordReady;
 import com.jaoafa.Dangerous.Discord.Event_ServerChatMessage;
@@ -47,6 +51,7 @@ public class Main extends JavaPlugin {
 	private static JavaPlugin javaplugin = null;
 	private static IDiscordClient discordclient = null;
 	public static boolean Updating = false;
+	public static boolean SERVICE_RUNNING_FLAG = true;
 	/**
 	 * プラグインが起動したときに呼び出し
 	 * @author mine_book000
@@ -56,6 +61,8 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		getCommand("selectmain").setExecutor(new Cmd_SelectMain(this));
 		getCommand("dangerous").setExecutor(new Cmd_Dangerous(this));
+		getCommand("management").setExecutor(new Cmd_Management(this));
+		getCommand("g").setExecutor(new Cmd_G(this));
 		getServer().getPluginManager().registerEvents(new Event_AsyncPreLogin(this), this);
 		getServer().getPluginManager().registerEvents(new Event_SendToDiscord(this), this);
 		getServer().getPluginManager().registerEvents(new Event_ServerSelect(this), this);
@@ -80,7 +87,7 @@ public class Main extends JavaPlugin {
 		}
 
 		try{
-			File jarfile = Updater.getJarFile(Main.class);
+			File jarfile = Main.getJarFile(Main.class);
 			File file = new File(jarfile.getParentFile().getAbsoluteFile() + File.separator + "Dangerous.update.jar");
 			if(file.exists()){
 				file.delete();
@@ -90,11 +97,12 @@ public class Main extends JavaPlugin {
 		}
 
 		javaplugin = this;
+		SERVICE_RUNNING_FLAG = true;
 	}
 	@Override
     public void onDisable() {
 		try{
-			File jarfile = Updater.getJarFile(Main.class);
+			File jarfile = Main.getJarFile(Main.class);
 			File file = new File(jarfile.getParentFile().getAbsoluteFile() + File.separator + "Dangerous.update.jar");
 			if(file.exists()){
 				file.delete();
@@ -114,6 +122,8 @@ public class Main extends JavaPlugin {
 		}else{
 			MessageQueue.Add(message);
 		}
+
+		SERVICE_RUNNING_FLAG = false;
 	}
 	/**
 	 * コンフィグ読み込み
@@ -193,5 +203,9 @@ public class Main extends JavaPlugin {
 	}
 	public static void setClient(IDiscordClient discordclient){
 		Main.discordclient = discordclient;
+	}
+	public static File getJarFile(Class<?> clazz) throws URISyntaxException, MalformedURLException {
+		URL url = clazz.getProtectionDomain().getCodeSource().getLocation();
+		return new File(new URL(url.toURI().toString().split("\\!")[0].replaceAll("jar:file", "file")).toURI().getPath());
 	}
 }

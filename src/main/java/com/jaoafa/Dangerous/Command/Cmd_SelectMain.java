@@ -26,7 +26,7 @@ public class Cmd_SelectMain implements CommandExecutor {
 		Player player = (Player) sender;
 		Inventory inv = Bukkit.getServer().createInventory(player, 3 * 9, "メイン鯖選択画面");
 
-		ItemStack item = new ItemStack(Material.OAK_SIGN);
+		ItemStack item = new ItemStack(Material.SIGN);
 		ItemMeta itemmeta = item.getItemMeta();
 		itemmeta.setDisplayName("あなたがよく利用するメインサーバを選択してください！");
 		item.setItemMeta(itemmeta);
@@ -44,7 +44,7 @@ public class Cmd_SelectMain implements CommandExecutor {
 		item_blue_bed.setItemMeta(itemmeta_blue_bed);
 		inv.setItem(12, item_blue_bed);
 
-		ItemStack item_black_bed = new ItemStack(Material.BLACK_BED);
+		ItemStack item_black_bed = new ItemStack(Material.GRAY_BED);
 		ItemMeta itemmeta_black_bed = item_black_bed.getItemMeta();
 		itemmeta_black_bed.setDisplayName("TORO Server");
 		item_black_bed.setItemMeta(itemmeta_black_bed);
