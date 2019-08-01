@@ -36,7 +36,12 @@ commands:
       permission: dangerous.h
       permission-message: You do not have permission to perform this command.
    hat:
-    description: 手に持っているブロックを頭に載せます。
-    usage: /hat
-    permission: dangerous.hat
-    permission-message: You do not have permission to perform this command.
+      description: 手に持っているブロックを頭に載せます。
+      usage: /<command>
+      permission: dangerous.hat
+      permission-message: You do not have permission to perform this command.
+   waitstop:
+      description: サーバオンラインプレイヤーが0人になったときに停止するかどうかを変更できます。
+      usage: /<command>
+      permission: dangerous.waitstop
+      permission-message: You do not have permission to perform this command.

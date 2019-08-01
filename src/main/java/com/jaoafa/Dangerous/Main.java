@@ -20,15 +20,18 @@ import com.jaoafa.Dangerous.Command.Cmd_H;
 import com.jaoafa.Dangerous.Command.Cmd_Hat;
 import com.jaoafa.Dangerous.Command.Cmd_Management;
 import com.jaoafa.Dangerous.Command.Cmd_SelectMain;
+import com.jaoafa.Dangerous.Command.Cmd_WaitStop;
 import com.jaoafa.Dangerous.Discord.Event_DiscordReady;
 import com.jaoafa.Dangerous.Discord.Event_ServerChatMessage;
 import com.jaoafa.Dangerous.Discord.MainEvent;
 import com.jaoafa.Dangerous.Event.Event_AsyncPreLogin;
 import com.jaoafa.Dangerous.Event.Event_JoinSelectServer;
+import com.jaoafa.Dangerous.Event.Event_LoginLeftPlayerCountNotice;
 import com.jaoafa.Dangerous.Event.Event_MainServerChat;
 import com.jaoafa.Dangerous.Event.Event_PlayerCommandSendOP;
 import com.jaoafa.Dangerous.Event.Event_SendToDiscord;
 import com.jaoafa.Dangerous.Event.Event_ServerSelect;
+import com.jaoafa.Dangerous.Event.Event_WaitStop;
 import com.jaoafa.Dangerous.Lib.MessageQueue;
 import com.jaoafa.Dangerous.Lib.MuteManager;
 import com.jaoafa.Dangerous.Lib.MySQL;
@@ -57,6 +60,7 @@ public class Main extends JavaPlugin {
 	private static IDiscordClient discordclient = null;
 	public static boolean Updating = false;
 	public static boolean SERVICE_RUNNING_FLAG = true;
+	public static boolean WAITSTOPFLAG = true;
 	/**
 	 * プラグインが起動したときに呼び出し
 	 * @author mine_book000
@@ -70,12 +74,15 @@ public class Main extends JavaPlugin {
 		getCommand("g").setExecutor(new Cmd_G(this));
 		getCommand("h").setExecutor(new Cmd_H(this));
 		getCommand("hat").setExecutor(new Cmd_Hat(this));
+		getCommand("waitstop").setExecutor(new Cmd_WaitStop(this));
 		getServer().getPluginManager().registerEvents(new Event_AsyncPreLogin(this), this);
 		getServer().getPluginManager().registerEvents(new Event_SendToDiscord(this), this);
 		getServer().getPluginManager().registerEvents(new Event_ServerSelect(this), this);
 		getServer().getPluginManager().registerEvents(new Event_MainServerChat(), this);
 		getServer().getPluginManager().registerEvents(new Event_JoinSelectServer(this), this);
 		getServer().getPluginManager().registerEvents(new Event_PlayerCommandSendOP(), this);
+		getServer().getPluginManager().registerEvents(new Event_WaitStop(this), this);
+		getServer().getPluginManager().registerEvents(new Event_LoginLeftPlayerCountNotice(), this);
 
 		Load_Config(); // Config Load
 
