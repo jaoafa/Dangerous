@@ -30,3 +30,8 @@ commands:
         /g <0-3> <Player>: 指定したプレイヤーのゲームモードを指定された数値に合うゲームモードに変更します。
       permission: dangerous.g
       permission-message: You do not have permission to perform this command.
+   h:
+      description: /h bubu (FruitServer)
+      usage: /<command> bubu
+      permission: dangerous.h
+      permission-message: You do not have permission to perform this command.

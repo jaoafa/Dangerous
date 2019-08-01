@@ -1,5 +1,8 @@
 package com.jaoafa.Dangerous.Event;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.bukkit.ChatColor;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.entity.Player;
@@ -15,13 +18,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.jaoafa.Dangerous.Main;
 import com.jaoafa.Dangerous.Lib.AdvancementJP;
+import com.jaoafa.Dangerous.Lib.MainServerManager;
 import com.jaoafa.Dangerous.Lib.MessageQueue;
+import com.jaoafa.Dangerous.Lib.Servers;
 
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.RequestBuffer;
 
 public class Event_SendToDiscord implements Listener {
 	JavaPlugin plugin;
+	String emoji_regex = ":(.+?):";
 	public Event_SendToDiscord(JavaPlugin plugin) {
 		this.plugin = plugin;
 	}
@@ -46,6 +53,21 @@ public class Event_SendToDiscord implements Listener {
 		chat = ChatColor.stripColor(chat);
 		chat = chat.replaceAll("@here", "");
 		chat = chat.replaceAll("@everyone", "");
+		// emoji
+		Pattern p = Pattern.compile(emoji_regex);
+		Matcher m = p.matcher(chat);
+		Servers server = MainServerManager.getMainServer(player.getUniqueId());
+		while(m.find()){
+			IEmoji emoji = Main.getEmoji(server, m.group(1));
+			if(emoji == null){
+				continue;
+			}
+			String animate = "";
+			if(emoji.isAnimated()){
+				animate = "a";
+			}
+			chat = chat.replace(m.group(), "<" + animate + ":" + emoji.getName() + ":" + emoji.getStringID() + ">");
+		}
 		String message = "**" + player.getName() + "**: " + chat;
 		if(Main.channels != null){
 			for(IChannel channel : Main.channels){

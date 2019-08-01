@@ -3,17 +3,16 @@ package com.jaoafa.Dangerous.Event;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.jaoafa.Dangerous.Task_OpenSelectMain;
+import com.jaoafa.Dangerous.Task_TabListSKKReloader;
 import com.jaoafa.Dangerous.Lib.MainServerManager;
 import com.jaoafa.Dangerous.Lib.Servers;
 
@@ -26,9 +25,18 @@ public class Event_JoinSelectServer implements Listener {
 	public void onLogin(PlayerJoinEvent event){
 		Player player = event.getPlayer();
 		UUID uuid = player.getUniqueId();
+
+		for(Player p: Bukkit.getServer().getOnlinePlayers()) {
+			new Task_TabListSKKReloader(p).runTaskLater(plugin, 20L);
+		}
+
 		if(MainServerManager.getMainServer(uuid) != null && MainServerManager.getMainServer(uuid) != Servers.UNKNOWN){
 			return;
 		}
+		player.sendMessage("[DANGEROUS] " + ChatColor.GREEN + "コマンド「/selectmain」を実行して、あなたがよく行くメインサーバを選択してください！");
+
+		new Task_OpenSelectMain(player).runTaskLater(plugin, 20L);
+		/*
 		Inventory inv = Bukkit.getServer().createInventory(player, 3 * 9, "メイン鯖選択画面");
 
 		ItemStack item = new ItemStack(Material.SIGN);
@@ -62,5 +70,6 @@ public class Event_JoinSelectServer implements Listener {
 		inv.setItem(16, item_orange_bed);
 
 		player.openInventory(inv);
+		*/
 	}
 }

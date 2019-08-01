@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 public enum Servers {
 	JAO(1, "jao Minecraft Server", ChatColor.YELLOW, 189377932429492224L),
 	FRUIT(2, "FruitServer", ChatColor.BLUE, 239487519488475136L),
-	TORO(3, "TORO Server", ChatColor.GRAY, 337838758441517057L),
+	TORO(3, "TORO Server", ChatColor.DARK_GRAY, 337838758441517057L),
 	SABAMISO(4, "さばみそサーバー", ChatColor.GOLD, 334770123220975628L),
 	UNKNOWN(-1, "UNKNOWN", ChatColor.BLACK, -1L);
 

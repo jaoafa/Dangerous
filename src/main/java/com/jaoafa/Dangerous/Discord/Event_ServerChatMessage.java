@@ -87,6 +87,8 @@ public class Event_ServerChatMessage {
 				_name = _name.replace("*", "\\*");
 				_name = _name.replace("`", "\\`");
 				_name = _name.replace("~", "\\~");
+				_name = _name.replaceAll("@here", "");
+				_name = _name.replaceAll("@everyone", "");
 				_channel.sendMessage("**[" + guild.getName() + "] " + _name + "**: " + _content + "\n");
 			});
 			if(!message.getAttachments().isEmpty()){
@@ -99,6 +101,8 @@ public class Event_ServerChatMessage {
 					_name = _name.replace("*", "\\*");
 					_name = _name.replace("`", "\\`");
 					_name = _name.replace("~", "\\~");
+					_name = _name.replaceAll("@here", "");
+					_name = _name.replaceAll("@everyone", "");
 					List<String> urls = new ArrayList<>();
 					for(Attachment attachment : message.getAttachments()){
 						urls.add(attachment.getUrl());

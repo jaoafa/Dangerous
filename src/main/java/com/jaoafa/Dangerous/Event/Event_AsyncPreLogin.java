@@ -48,8 +48,8 @@ public class Event_AsyncPreLogin implements Listener {
 					if(!p.isOp()){
 						continue;
 					}
-					p.sendMessage("[Dangerous] " + name + " | REASON: " + reason);
-					p.sendMessage("[Dangerous] " + name + " | BY: " + banned_by_user + " (" + banned_by_server + ")");
+					p.sendMessage("[Dangerous] " + ChatColor.GREEN + name + " | REASON: " + reason);
+					p.sendMessage("[Dangerous] " + ChatColor.GREEN + name + " | BY: " + banned_by_user + " (" + banned_by_server + ")");
 				}
 				return;
 			}
@@ -58,7 +58,7 @@ public class Event_AsyncPreLogin implements Listener {
 				if(!p.isOp()){
 					continue;
 				}
-				p.sendMessage("[Dangerous] " + name + " | LoginCheckError: " + e.getMessage());
+				p.sendMessage("[Dangerous] " + ChatColor.GREEN + name + " | LoginCheckError: " + e.getMessage());
 			}
 		}
 	}

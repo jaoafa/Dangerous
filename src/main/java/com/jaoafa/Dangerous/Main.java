@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.jaoafa.Dangerous.Command.Cmd_Dangerous;
 import com.jaoafa.Dangerous.Command.Cmd_G;
+import com.jaoafa.Dangerous.Command.Cmd_H;
 import com.jaoafa.Dangerous.Command.Cmd_Management;
 import com.jaoafa.Dangerous.Command.Cmd_SelectMain;
 import com.jaoafa.Dangerous.Discord.Event_DiscordReady;
@@ -30,11 +31,14 @@ import com.jaoafa.Dangerous.Event.Event_ServerSelect;
 import com.jaoafa.Dangerous.Lib.MessageQueue;
 import com.jaoafa.Dangerous.Lib.MuteManager;
 import com.jaoafa.Dangerous.Lib.MySQL;
+import com.jaoafa.Dangerous.Lib.Servers;
 
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IEmoji;
+import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.RequestBuffer;
 
@@ -63,6 +67,7 @@ public class Main extends JavaPlugin {
 		getCommand("dangerous").setExecutor(new Cmd_Dangerous(this));
 		getCommand("management").setExecutor(new Cmd_Management(this));
 		getCommand("g").setExecutor(new Cmd_G(this));
+		getCommand("h").setExecutor(new Cmd_H(this));
 		getServer().getPluginManager().registerEvents(new Event_AsyncPreLogin(this), this);
 		getServer().getPluginManager().registerEvents(new Event_SendToDiscord(this), this);
 		getServer().getPluginManager().registerEvents(new Event_ServerSelect(this), this);
@@ -207,5 +212,22 @@ public class Main extends JavaPlugin {
 	public static File getJarFile(Class<?> clazz) throws URISyntaxException, MalformedURLException {
 		URL url = clazz.getProtectionDomain().getCodeSource().getLocation();
 		return new File(new URL(url.toURI().toString().split("\\!")[0].replaceAll("jar:file", "file")).toURI().getPath());
+	}
+	public static IEmoji getEmoji(Servers priorityServer, String name){
+		if(priorityServer != Servers.UNKNOWN && Main.getClient().getGuildByID(priorityServer.getDiscordServer()) != null){
+			IGuild guild = Main.getClient().getGuildByID(priorityServer.getDiscordServer());
+			IEmoji emoji = guild.getEmojiByName(name);
+			if(emoji != null){
+				return emoji;
+			}
+		}
+		List<IGuild> guilds = Main.getClient().getGuilds();
+		for(IGuild guild : guilds){
+			IEmoji emoji = guild.getEmojiByName(name);
+			if(emoji != null){
+				return emoji;
+			}
+		}
+		return null;
 	}
 }

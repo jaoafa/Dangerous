@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.jaoafa.Dangerous.Task_TabListSKKReloader;
 import com.jaoafa.Dangerous.Lib.MainServerManager;
 import com.jaoafa.Dangerous.Lib.Servers;
 
@@ -62,6 +63,9 @@ public class Event_ServerSelect implements Listener {
 			MainServerManager.setMainServer(uuid, Servers.SABAMISO);
 			player.sendMessage("[ServerMain] " + ChatColor.GREEN + "メインサーバを「" + ChatColor.GOLD + "さばみそサーバー" + ChatColor.GREEN + "」として設定しました。");
 		}
+
+		new Task_TabListSKKReloader(player).runTaskLater(plugin, 20L);
+
 		player.closeInventory();
 	}
 }

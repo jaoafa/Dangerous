@@ -71,7 +71,7 @@ public class Updater extends Thread{
 				System.out.println("[Dangerous] " + "(No changed filesize)");
 			}
 			System.out.println("[Dangerous] " + "Please Server Restart");
-
+			Main.Updating = false;
 		}catch(URISyntaxException | IOException e){
 			for(Player player : Bukkit.getOnlinePlayers()){
 				if(!player.isOp()){
