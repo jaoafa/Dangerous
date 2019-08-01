@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.jaoafa.Dangerous.Command.Cmd_Dangerous;
 import com.jaoafa.Dangerous.Command.Cmd_G;
 import com.jaoafa.Dangerous.Command.Cmd_H;
+import com.jaoafa.Dangerous.Command.Cmd_Hat;
 import com.jaoafa.Dangerous.Command.Cmd_Management;
 import com.jaoafa.Dangerous.Command.Cmd_SelectMain;
 import com.jaoafa.Dangerous.Discord.Event_DiscordReady;
@@ -68,6 +69,7 @@ public class Main extends JavaPlugin {
 		getCommand("management").setExecutor(new Cmd_Management(this));
 		getCommand("g").setExecutor(new Cmd_G(this));
 		getCommand("h").setExecutor(new Cmd_H(this));
+		getCommand("hat").setExecutor(new Cmd_Hat(this));
 		getServer().getPluginManager().registerEvents(new Event_AsyncPreLogin(this), this);
 		getServer().getPluginManager().registerEvents(new Event_SendToDiscord(this), this);
 		getServer().getPluginManager().registerEvents(new Event_ServerSelect(this), this);

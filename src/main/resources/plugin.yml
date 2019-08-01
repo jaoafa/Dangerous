@@ -35,3 +35,8 @@ commands:
       usage: /<command> bubu
       permission: dangerous.h
       permission-message: You do not have permission to perform this command.
+   hat:
+    description: 手に持っているブロックを頭に載せます。
+    usage: /hat
+    permission: dangerous.hat
+    permission-message: You do not have permission to perform this command.
