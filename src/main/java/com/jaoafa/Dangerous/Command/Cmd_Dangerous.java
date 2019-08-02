@@ -2,9 +2,11 @@ package com.jaoafa.Dangerous.Command;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -149,8 +151,15 @@ public class Cmd_Dangerous implements CommandExecutor {
 					}
 					IChannel channel = Main.getClient().getChannelByID(channelID);
 					if(channel == null){
-						sender.sendMessage("[Dangerous] " + ChatColor.GREEN + "指定されたチャンネルが見つかりません。");
-						return true;
+						List<IChannel> channels = Main.getClient().getChannels();
+						List<IChannel> filtered = channels.stream().filter(
+								_channel -> _channel != null && _channel.getLongID() == channelID).collect(Collectors.toList());
+						if(filtered.size() != 0){
+							channel = filtered.get(0);
+						}else{
+							sender.sendMessage("[Dangerous] " + ChatColor.GREEN + "指定されたチャンネルが見つかりません。");
+							return true;
+						}
 					}
 					String name = channel.getName();
 					String guildName = channel.getGuild().getName();
@@ -263,7 +272,12 @@ public class Cmd_Dangerous implements CommandExecutor {
 						strchannels.add(channel.getName() + "(" + channel.getGuild().getName() + ")");
 					}
 					String allchannels = String.join(", ", strchannels);
-					sender.sendMessage("[Dangerous] " + ChatColor.GREEN + allchannels);
+					List<String> channelIds = new ArrayList<>();
+					for(long chanid : Main.channelIds){
+						channelIds.add(String.valueOf(chanid));
+					}
+					String allchannelid = String.join(", ", channelIds);
+					sender.sendMessage("[Dangerous] " + ChatColor.GREEN + allchannels + "\n\n" + allchannelid);
 					return true;
 				}
 			}else if(args[0].equalsIgnoreCase("update")){

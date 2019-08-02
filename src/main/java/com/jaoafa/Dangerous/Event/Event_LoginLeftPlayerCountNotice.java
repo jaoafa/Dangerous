@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class Event_LoginLeftPlayerCountNotice implements Listener {
 	@EventHandler
 	public void OnEvent_LoginPlayerCountNotice(PlayerJoinEvent event){
-		Bukkit.broadcastMessage(ChatColor.RED + "■" + ChatColor.WHITE + "jaotan: 現在『" + Bukkit.getServer().getOnlinePlayers().size() + "人』がログインしています");
+		Bukkit.broadcastMessage(ChatColor.RED + "■" + ChatColor.WHITE + "4Crime: 現在『" + Bukkit.getServer().getOnlinePlayers().size() + "人』がログインしています");
 	}
 
 	@EventHandler

@@ -60,7 +60,7 @@ public class Main extends JavaPlugin {
 	private static IDiscordClient discordclient = null;
 	public static boolean Updating = false;
 	public static boolean SERVICE_RUNNING_FLAG = true;
-	public static boolean WAITSTOPFLAG = true;
+	public static boolean WAITSTOPFLAG = false;
 	/**
 	 * プラグインが起動したときに呼び出し
 	 * @author mine_book000

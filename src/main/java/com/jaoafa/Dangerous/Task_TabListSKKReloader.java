@@ -20,6 +20,6 @@ public class Task_TabListSKKReloader extends BukkitRunnable {
 		Servers server = MainServerManager.getMainServer(player.getUniqueId());
 		if(server == null) server = Servers.UNKNOWN;
 		player.setPlayerListName(server.getColor() + "■" + ChatColor.RESET + player.getName());
-		player.setDisplayName(server.getColor() + "■" + ChatColor.RESET + player.getName());
+		//player.setDisplayName(server.getColor() + "■" + ChatColor.RESET + player.getName());
 	}
 }
