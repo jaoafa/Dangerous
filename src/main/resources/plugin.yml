@@ -45,3 +45,8 @@ commands:
       usage: /<command>
       permission: dangerous.waitstop
       permission-message: You do not have permission to perform this command.
+   pvp:
+      description: PvPを有効/無効化します。
+      usage: /<command>
+      permission: dangerous.pvp
+      permission-message: You do not have permission to perform this command.

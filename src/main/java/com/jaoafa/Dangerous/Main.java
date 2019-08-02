@@ -19,16 +19,20 @@ import com.jaoafa.Dangerous.Command.Cmd_G;
 import com.jaoafa.Dangerous.Command.Cmd_H;
 import com.jaoafa.Dangerous.Command.Cmd_Hat;
 import com.jaoafa.Dangerous.Command.Cmd_Management;
+import com.jaoafa.Dangerous.Command.Cmd_PvP;
 import com.jaoafa.Dangerous.Command.Cmd_SelectMain;
 import com.jaoafa.Dangerous.Command.Cmd_WaitStop;
 import com.jaoafa.Dangerous.Discord.Event_DiscordReady;
 import com.jaoafa.Dangerous.Discord.Event_ServerChatMessage;
 import com.jaoafa.Dangerous.Discord.MainEvent;
 import com.jaoafa.Dangerous.Event.Event_AsyncPreLogin;
+import com.jaoafa.Dangerous.Event.Event_Bed;
 import com.jaoafa.Dangerous.Event.Event_JoinSelectServer;
+import com.jaoafa.Dangerous.Event.Event_Katakana;
 import com.jaoafa.Dangerous.Event.Event_LoginLeftPlayerCountNotice;
 import com.jaoafa.Dangerous.Event.Event_MainServerChat;
 import com.jaoafa.Dangerous.Event.Event_PlayerCommandSendOP;
+import com.jaoafa.Dangerous.Event.Event_PvP;
 import com.jaoafa.Dangerous.Event.Event_SendToDiscord;
 import com.jaoafa.Dangerous.Event.Event_ServerSelect;
 import com.jaoafa.Dangerous.Event.Event_WaitStop;
@@ -75,6 +79,7 @@ public class Main extends JavaPlugin {
 		getCommand("h").setExecutor(new Cmd_H(this));
 		getCommand("hat").setExecutor(new Cmd_Hat(this));
 		getCommand("waitstop").setExecutor(new Cmd_WaitStop(this));
+		getCommand("pvp").setExecutor(new Cmd_PvP(this));
 		getServer().getPluginManager().registerEvents(new Event_AsyncPreLogin(this), this);
 		getServer().getPluginManager().registerEvents(new Event_SendToDiscord(this), this);
 		getServer().getPluginManager().registerEvents(new Event_ServerSelect(this), this);
@@ -83,6 +88,9 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Event_PlayerCommandSendOP(), this);
 		getServer().getPluginManager().registerEvents(new Event_WaitStop(this), this);
 		getServer().getPluginManager().registerEvents(new Event_LoginLeftPlayerCountNotice(), this);
+		getServer().getPluginManager().registerEvents(new Event_Bed(), this);
+		getServer().getPluginManager().registerEvents(new Event_PvP(), this);
+		getServer().getPluginManager().registerEvents(new Event_Katakana(), this);
 
 		Load_Config(); // Config Load
 
