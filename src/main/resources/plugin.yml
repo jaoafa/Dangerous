@@ -50,3 +50,8 @@ commands:
       usage: /<command>
       permission: dangerous.pvp
       permission-message: You do not have permission to perform this command.
+   jp:
+      description: かな変換を有効化・無効化します。
+      usage: /<command>
+      permission: dangerous.jp
+      permission-message: You do not have permission to perform this command.

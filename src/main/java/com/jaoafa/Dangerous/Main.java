@@ -18,6 +18,7 @@ import com.jaoafa.Dangerous.Command.Cmd_Dangerous;
 import com.jaoafa.Dangerous.Command.Cmd_G;
 import com.jaoafa.Dangerous.Command.Cmd_H;
 import com.jaoafa.Dangerous.Command.Cmd_Hat;
+import com.jaoafa.Dangerous.Command.Cmd_Jp;
 import com.jaoafa.Dangerous.Command.Cmd_Management;
 import com.jaoafa.Dangerous.Command.Cmd_PvP;
 import com.jaoafa.Dangerous.Command.Cmd_SelectMain;
@@ -36,6 +37,7 @@ import com.jaoafa.Dangerous.Event.Event_PvP;
 import com.jaoafa.Dangerous.Event.Event_SendToDiscord;
 import com.jaoafa.Dangerous.Event.Event_ServerSelect;
 import com.jaoafa.Dangerous.Event.Event_WaitStop;
+import com.jaoafa.Dangerous.Lib.JpManager;
 import com.jaoafa.Dangerous.Lib.MessageQueue;
 import com.jaoafa.Dangerous.Lib.MuteManager;
 import com.jaoafa.Dangerous.Lib.MySQL;
@@ -80,6 +82,7 @@ public class Main extends JavaPlugin {
 		getCommand("hat").setExecutor(new Cmd_Hat(this));
 		getCommand("waitstop").setExecutor(new Cmd_WaitStop(this));
 		getCommand("pvp").setExecutor(new Cmd_PvP(this));
+		getCommand("jp").setExecutor(new Cmd_Jp(this));
 		getServer().getPluginManager().registerEvents(new Event_AsyncPreLogin(this), this);
 		getServer().getPluginManager().registerEvents(new Event_SendToDiscord(this), this);
 		getServer().getPluginManager().registerEvents(new Event_ServerSelect(this), this);
@@ -95,6 +98,7 @@ public class Main extends JavaPlugin {
 		Load_Config(); // Config Load
 
 		MuteManager.start(this);
+		JpManager.start(this);
 
 		// start message
 		String message = ":white_check_mark: **Server Started!** :white_check_mark:";
