@@ -55,3 +55,8 @@ commands:
       usage: /<command>
       permission: dangerous.jp
       permission-message: You do not have permission to perform this command.
+   afk:
+      description: AFK
+      usage: /<command>
+      permission: dangerous.afk
+      permission-message: You do not have permission to perform this command.

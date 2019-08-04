@@ -1,15 +1,9 @@
 package com.jaoafa.Dangerous.Command;
 
-import java.util.UUID;
-
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.jaoafa.Dangerous.Lib.PvPManager;
 
 public class Cmd_PvP implements CommandExecutor {
 		JavaPlugin plugin;
@@ -18,6 +12,8 @@ public class Cmd_PvP implements CommandExecutor {
 		}
 		@Override
 		public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+			sender.sendMessage("disabled");return true;
+			/*
 			if(!(sender instanceof Player)){
 				sender.sendMessage("[PvP] " + ChatColor.GREEN + "このコマンドはサーバ内から実行してください。");
 				return true;
@@ -34,6 +30,6 @@ public class Cmd_PvP implements CommandExecutor {
 				PvPManager.setPvPFlag(uuid, true);
 				sender.sendMessage("[PvP] " + ChatColor.GREEN + "PvPを有効化しました。");
 				return true;
-			}
+			}*/
 		}
 	}
